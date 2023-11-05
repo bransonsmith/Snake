@@ -1,0 +1,15 @@
+C:\Dev\Tyler\Examples\Snake\Snake\bin\Debug\net7.0\Snake.exe
+C:\Dev\Tyler\Examples\Snake\Snake\bin\Debug\net7.0\Snake.deps.json
+C:\Dev\Tyler\Examples\Snake\Snake\bin\Debug\net7.0\Snake.runtimeconfig.json
+C:\Dev\Tyler\Examples\Snake\Snake\bin\Debug\net7.0\Snake.dll
+C:\Dev\Tyler\Examples\Snake\Snake\bin\Debug\net7.0\Snake.pdb
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\Snake.csproj.AssemblyReference.cache
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\Snake.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\Snake.AssemblyInfoInputs.cache
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\Snake.AssemblyInfo.cs
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\Snake.csproj.CoreCompileInputs.cache
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\Snake.dll
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\refint\Snake.dll
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\Snake.pdb
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\Snake.genruntimeconfig.cache
+C:\Dev\Tyler\Examples\Snake\Snake\obj\Debug\net7.0\ref\Snake.dll
