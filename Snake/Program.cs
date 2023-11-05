@@ -19,8 +19,9 @@ var gameRunner = new ConsoleSnakeGameRunner(userInputHandler, gameRenderer);
 gameRunner.ResetGame(GAME_AREA_HEIGHT, GAME_AREA_WIDTH);
 
 
-const int FPS = 10;
+const int FPS = 15;
 TimeSpan frameTimeSpan = TimeSpan.FromSeconds(1.0 / FPS);
+
 Stopwatch stopwatch = new Stopwatch();
 TimeSpan lastFrameTime = TimeSpan.Zero;
 stopwatch.Start();
@@ -59,6 +60,6 @@ while (true)
     Console.CursorVisible = false;
 
     // Sleep for a short duration to reduce CPU usage
-    Thread.Sleep(10);
+    Thread.Sleep(1);
 }
 

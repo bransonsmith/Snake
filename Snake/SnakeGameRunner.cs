@@ -32,6 +32,8 @@
         {
             SnakeGameArea = new SnakeGameArea(gameAreaHeightInSpaces, gameAreaWidthInSpaces);
             CreateNewSnakeInCenterOfTheGameArea();
+            AddObstaclesToGameArea();
+            AddAFoodToARandomEmptyCell();
             SnakeGameRenderer.RenderEntireSnakeGameArea(SnakeGameArea);
         }
 
@@ -46,6 +48,33 @@
             snakeBodyCellUpdates.First().NewState = CellState.SnakeHead;
 
             UpdateCells(snakeBodyCellUpdates);
+        }
+
+        private void AddAFoodToARandomEmptyCell() {
+            var cellUpdateCommands = new List<CellUpdateCommand>();
+            
+            var FoodCell = GetEmptyCell();
+            cellUpdateCommands.Add(new CellUpdateCommand { CellToUpdate = FoodCell, NewState = CellState.Food });
+            UpdateCells(cellUpdateCommands);
+        }
+        
+        private void AddObstaclesToGameArea() {
+            var cellUpdateCommands = new List<CellUpdateCommand>();
+
+            var obstacleCells = new List<Cell>();
+
+            obstacleCells.Add(SnakeGameArea.Cells[5][10]);
+            obstacleCells.Add(SnakeGameArea.Cells[5][12]);
+            obstacleCells.Add(SnakeGameArea.Cells[5][14]);
+
+            obstacleCells.Add(SnakeGameArea.Cells[12][10]);
+            obstacleCells.Add(SnakeGameArea.Cells[12][12]);
+            obstacleCells.Add(SnakeGameArea.Cells[12][14]);
+
+            foreach(var obstacleCell in obstacleCells) {
+                cellUpdateCommands.Add(new CellUpdateCommand { CellToUpdate = obstacleCell, NewState = CellState.Obstacle });
+            }
+            UpdateCells(cellUpdateCommands);
         }
 
         public List<Cell> UpdateCells(List<CellUpdateCommand> cellUpdateCommands)
@@ -90,9 +119,32 @@
                         break;
                 }
             }
-            
-            
+        }
 
+        private Cell GetEmptyCell() {
+            var emptyCells = SnakeGameArea.Cells
+                .SelectMany(subArray => subArray)
+                .Where(cell => cell.State == CellState.Empty)
+                .ToList();
+
+            if (!emptyCells.Any())
+            {
+                return null; // TODO: YOU WIN
+            }
+
+            return emptyCells[new Random().Next(emptyCells.Count)];
+        }
+
+        private bool IsNextMoveInBounds(Cell headPosition, Direction direction) {
+            switch (Snake.Direction)
+            {
+                case Direction.Up: return headPosition.Y - 1 >= 0;
+                case Direction.Right: return headPosition.X + 1 < SnakeGameArea.Cells[0].Length;
+                case Direction.Down: return headPosition.Y + 1 < SnakeGameArea.Cells.Length;
+                case Direction.Left: return headPosition.X - 1 >= 0;
+                default: break;
+            }
+            return true;
         }
 
         private List<CellUpdateCommand> MoveSnake() {
@@ -100,6 +152,11 @@
             var cellUpdateCommands = new List<CellUpdateCommand>();
             
             var oldSnakeHeadCell = Snake.GetHead();
+            
+            if (!IsNextMoveInBounds(oldSnakeHeadCell, Snake.Direction)) {
+                Console.WriteLine($"GAME OVER! Out of Bounds. SCORE: {Snake.Cells.Count()}");
+            }
+
             Cell newSnakeHeadCell;
             switch (Snake.Direction)
             {
@@ -120,6 +177,13 @@
                     break;
             };
 
+            
+
+            if (newSnakeHeadCell.State == CellState.Obstacle) {
+                Console.WriteLine($"GAME OVER! Ouch! SCORE: {Snake.Cells.Count()}");
+            }
+
+
             Snake.Enqueue(newSnakeHeadCell);
 
             cellUpdateCommands.Add(new CellUpdateCommand { CellToUpdate = newSnakeHeadCell, NewState = CellState.SnakeHead });
@@ -128,6 +192,9 @@
             if (newSnakeHeadCell.State != CellState.Food) {
                 var cellThatWasRemoved = Snake.Dequeue();
                 cellUpdateCommands.Add(new CellUpdateCommand { CellToUpdate = cellThatWasRemoved, NewState = CellState.Empty });
+            } else {
+                var FoodCell = GetEmptyCell();
+                cellUpdateCommands.Add(new CellUpdateCommand { CellToUpdate = FoodCell, NewState = CellState.Food });
             }
 
             // Console.WriteLine($"Move Snake, {cellUpdateCommands.Count()} updates");
@@ -140,7 +207,7 @@
             var cellUpdateCommands = MoveSnake();
             var updatedCells = UpdateCells(cellUpdateCommands);
             SnakeGameRenderer.RenderCells(updatedCells);
-            
+
             // Console.ForegroundColor = ConsoleColor.White;
             // Console.BackgroundColor = ConsoleColor.Black;
             // Console.Write(String.Join(' ', Snake.Cells.Select(c => c.ToString())));
