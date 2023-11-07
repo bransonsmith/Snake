@@ -1,23 +1,20 @@
-﻿namespace Snake
-{
+﻿using ConsoleGame;
 
-    public interface ISnakeUserInputHandler
+namespace Snake
+{
+    /// <summary>
+    /// Current Direction updated to most recent user input in a CheckUserInput call.
+    /// Generally, CheckUserInput should be called in every game loop cycle.
+    /// </summary>
+    public interface ISnakeInputHandler
     {
         public Direction CurrentDirection { get; set; }
         public void CheckUserInput();
     }
 
-    public interface IConsoleGameInputHandler {
-        public ConsoleKey CheckUserKeyInput();
-    }
-
-    public interface IConsoleSnakeUserInputHandler: ISnakeUserInputHandler { }
-
-    public class ConsoleSnakeUserInputHandler : IConsoleSnakeUserInputHandler {
-
+    public class SnakeKeyboardInputHandler : ISnakeInputHandler
+    {
         public Direction CurrentDirection { get; set; } = Direction.Down;
-
-        public Queue<Direction> DirectionInputQueue { get; set; }
 
         public void CheckUserInput()
         {
