@@ -3,8 +3,8 @@
 var snakeGameConfig = new SnakeGameConfig {
     Name = "Normal",
     Order = 10,
-    GameAreaWidth = 60,
-    GameAreaHeight = 20,
+    GameAreaWidth = 24,
+    GameAreaHeight = 15,
     Fps = 15,
 };
 
